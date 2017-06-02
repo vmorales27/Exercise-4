@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TODO-LIST</title>
+		<script type="text/javascript"  src="https://code.jquery.com/jquery-3.2.1.min.js"> </script>
+		<style type="text/css">
+			#box {
+				background: #ccc;
+				border:1px solid black;
+				max-height: 100%;
+				height:600px;
+				width:400px;
+				margin:auto;
+				text-align: center;
+				margin-top:20px;
+				
+			}
+
+			#button{
+				display: block;
+				margin:10px;
+			}
+
+			ul{
+				list-style-type: none;
+			}
+
+			#sorted{
+				border-top: :2px solid;
+				height:200px;
+
+			}
+		</style>
+</head>
+<body>
+
+<div id = "box" >
+	<h1>To-Do List</h1>
+	<input class="input" type="text" name=""><button id="enter"> Enter</button>
+	
+	<div id="button">
+	<button id = "all" class="btn">All</button>
+	<button id="comp" class="btn">Completed</button>
+	<button id="pending" class="btn">Pending</button>
+	<br>
+	<input id="sell" type="checkbox" name=""><span>Select/Deselect All</span>
+	
+	</div>
+
+	<ul id="toDo"> </ul>
+
+
+	<div id="sortedList"></div>
+
+	<button id ="delete"> Delete Completed</button>
+</div >
+
+
+<script type="text/javascript">
+	
+function addText(){
+	var text = $(".input").val();
+	//alert(text);
+
+	$("#toDo").append('<li class= "newLi" > <input class= "list" type="checkbox">' + text + '<li>');
+	$(".input").val('');
+}
+
+function finish(){
+	if($(".list").is(":checked")){
+		$(this).parent().css('textDecoration','line-through');
+	}else if($(".list").not(":checked")){
+		$(this).parent().css('textDecoration','none');	
+	}
+
+}
+function sort (){
+	$(".list").each(function(){
+		if(this.checked){
+			$(this).parent().show();
+		}else{
+			$(this).parent().hide();
+		}
+	});
+}
+
+
+function aLl(){
+$(".newLi").show();
+};
+
+function pending (){
+	$(".list").each(function(){
+		if(this.checked){
+			$(this).parent().hide();
+		}else{
+			$(this).parent().show();
+		}
+
+	});
+}
+
+function del(){
+	
+	//remove(this.checked()) 
+	if($('input[type="checkbox"]:checked')){
+
+		$("#toDo li").remove();
+
+
+	}
+
+	$("#sell").prop('checked', false);
+	
+	//console.log($("#sell").prop('checked', false));
+	
+	
+
+}
+
+
+
+ function sel (){
+ 	if(this.checked==true){
+ 		$('.list').each(function(){
+ 			this.checked=true;
+ 			$(this).parent().css('textDecoration','line-through');
+ 		})
+ 	}else{
+ 		if(this.checked==false){
+ 			$('.list').each(function(){
+ 				this.checked=false;
+ 				$(this).parent().css('textDecoration','none');
+ 			});
+ 		}
+ 	}
+ }
+
+
+
+
+
+$(document).ready(function(){
+	$('#enter').on('click',addText);
+	$(document).on('click','.list',finish);
+	$(document).on('click','#comp',sort);
+	$(document).on('click','#all', aLl );
+	$(document).on('click','#pending', pending );
+	$(document).on('click','#delete',del);
+	$(document).on('click','#sell',sel);
+});
+
+</script>
+
+</body>
+</html>
